@@ -7,6 +7,7 @@ using Cursomongo.Api.Data.Repositories;
 using Cursomongo.Api.Domain.Entities;
 using Cursomongo.Api.Domain.Enums;
 using Cursomongo.Api.Domain.ValueObjects;
+using CursoMongo.Api.Controllers.Outputs;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -52,6 +53,58 @@ namespace Cursomongo.Api.Controllers
                 new
                 {
                     data = "Restaurante inserido com sucesso"
+                }
+            );
+            }
+
+        [HttpGet("restaurante/todos")]
+        public async Task<ActionResult> ObterRestaurantes()
+        {
+            var restaurantes = await _restauranteRepository.ObterTodos();
+
+            var listagem = restaurantes.Select(_ => new RestauranteListagem
+            {
+                Id = _.Id,
+                Nome = _.Nome,
+                Cozinha = (int)_.Cozinha,
+                Cidade = _.Endereco.Cidade
+            });
+
+            return Ok(
+                new
+                {
+                    data = listagem
+                }
+            );
+        }
+
+        [HttpGet("restaurante/{id}")]
+        public ActionResult ObterRestaurante(string id)
+        {
+            var restaurante = _restauranteRepository.ObterPorId(id);
+
+            if (restaurante == null)
+                return NotFound();
+
+            var exibicao = new RestauranteExibicao
+            {
+                Id = restaurante.Id,
+                Nome = restaurante.Nome,
+                Cozinha = (int)restaurante.Cozinha,
+                Endereco = new EnderecoExibicao
+                {
+                    Logradouro = restaurante.Endereco.Logradouro,
+                    Numero = restaurante.Endereco.Numero,
+                    Cidade = restaurante.Endereco.Cidade,
+                    Cep = restaurante.Endereco.Cep,
+                    UF = restaurante.Endereco.UF
+                }
+            };
+
+            return Ok(
+                new
+                {
+                    data = exibicao
                 }
             );
         }

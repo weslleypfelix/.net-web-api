@@ -30,7 +30,7 @@ namespace Cursomongo.Api.Domain.ValueObjects
             ValidarUF();
             ValidarCep();
 
-            // validate vai olhar pra dentro da instancia da classe para cada um desses rulesfor q tá dentro da classe
+            // validate vai olhar pra dentro da instancia da classe para cada um desses 'rulesfor' q tá dentro da classe
             // e ele vai ver se algum desses falhou. se falhou, ele retorna naquele return
             ValidationResult = Validate(this);
 

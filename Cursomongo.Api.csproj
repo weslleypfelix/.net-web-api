@@ -14,6 +14,7 @@
     <None Remove="Data\" />
     <None Remove="Data\Repositories\" />
     <None Remove="Data\Schemas\" />
+    <None Remove="Controllers\Outputs\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Domain\" />
@@ -24,6 +25,7 @@
     <Folder Include="Data\" />
     <Folder Include="Data\Repositories\" />
     <Folder Include="Data\Schemas\" />
+    <Folder Include="Controllers\Outputs\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="FluentValidation.AspNetCore" Version="11.0.3" />
